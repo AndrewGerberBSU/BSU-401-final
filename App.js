@@ -1,18 +1,19 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View,Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TextField from "@mui/material/TextField";
+import DialogInput from 'react-native-dialog-input';
 var studentlist = [
   { id: 1, name: 'Cesar Raymundo', present: false },
   { id: 2, name: 'Andrew Gerber', present: false },
   { id: 3, name: 'Zeynep Ozarslan', present: false },
 ];
 
-const [ashowme, setshowme] = useState(false);
+
 
 function HomeScreen() {
-  return (
+   const [ashowme, setshowme] = useState(false);
+  return ( 
     <View>
     <Button title="Add a Student" onPress={() => addButton()}/>
     <table>
@@ -30,11 +31,25 @@ function HomeScreen() {
       ))}
     </table>
     <Button title="submit" />
-
+  <DialogInput
+        isDialogVisible={ashowme}
+        title="Student's Name"
+        message="Enter The Student's Name To Add"
+        submitInput={(inputText) => {
+          setshowme(false);
+          // addLocation(inputText);
+        }}
+        closeDialog={() => {
+          setshowme(false);
+        }}>
+        <Text>Something</Text>
+      </DialogInput>
 
   </View>
   );
-
+  function addButton(){
+    setshowme(true);
+}
 }
 
 function SettingsScreen() {
@@ -56,13 +71,13 @@ function MyTabs() {
   );
 }
 
-function addButton(){
-  
-}
+
 export default function App() {
+ 
   return (
     <NavigationContainer>
       <MyTabs />
     </NavigationContainer>
   );
+
 }
